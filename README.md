@@ -1,10 +1,21 @@
 # naantree-skill
 
-Official [skills.sh](https://skills.sh/) skill package for **naantree**: a zero-dependency, high-performance modular multi-agent coordination protocol.
+Official [skills.sh](https://skills.sh/) skill package for **naantree**: a zero-dependency, high-performance modular multi-agent coordination protocol for autonomous coding swarms.
 
-Allows 2 to 20+ autonomous AI coding agents (Gemini, Claude Code, Cursor, Copilot, etc.) sharing the **same repo** and **same git branch** to self-organize: auto-assign identities, elect a coordinator, split work, claim paths, conduct peer reviews, and safely commit without git collisions.
+Allows 2 to 20+ autonomous AI coding agents (Gemini, Claude Code, Cursor, Codex, Copilot, etc.) sharing the **same repo** and **same git branch** to safely collaborate: auto-assign identities, elect a coordinator, split work, claim paths, conduct peer reviews, enforce quality gates, and commit to git without merge collisions.
 
-Core CLI repository: [github.com/itznan/naantree](https://github.com/itznan/naantree)
+- **Core CLI repository:** [github.com/itznan/naantree](https://github.com/itznan/naantree)
+- **Latest releases:** [github.com/itznan/naantree/releases](https://github.com/itznan/naantree/releases)
+
+---
+
+## Key Features
+
+- **Cross-Platform:** Native support across Linux (`/proc`), macOS (`kill -0`), and Windows (`windows-sys` Win32 process handles).
+- **PID Recycling Protection:** Tracks process creation timestamps alongside PIDs to prevent recycled shell PIDs from claiming dead agent sessions.
+- **Machine-Readable Output:** Pass `--json` on any command (`status`, `inbox`, `task list`, `whoami`, `doctor`) for clean, schema-stable JSON output tailored for LLM tool consumption.
+- **Robust Quality Gates:** Automated execution timeouts (`NAANTREE_GATE_TIMEOUT_SECS`, default 300s) and non-blocking commit HEAD tracking.
+- **Peer Review & Guardrails:** Serialized atomic git commits, path claim locks, and mandatory peer review before task completion.
 
 ---
 
@@ -35,7 +46,7 @@ npx skills add itznan/naantree-skill --agent cursor
 
 ---
 
-## How to Add to Gemini & AI Coding Agents
+## Manual Installation for AI Coding Agents
 
 ### 1. Google Gemini / Antigravity
 Place `SKILL.md` into your project's agent skills directory:
@@ -82,8 +93,8 @@ npx skills add /path/to/naantree-skill
 ## Prompting Your Agents
 
 Once installed, give all participating agents the exact same prompt:
-```
-"Refactor the authentication module using the naantree skill."
+```text
+Refactor the authentication module using the naantree skill.
 ```
 
 The agents will automatically:
